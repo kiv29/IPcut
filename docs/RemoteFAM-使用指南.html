@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remote Editor Kit — 使用指南 ‧ RemoteFAM by Fyn</title>
+<style>
+  :root{
+    --cream:#F4EEDF; --cream2:#FAF5E9; --card:#FDFBF4; --card2:#F3EDDD;
+    --ink:#3a342a; --dim:#7c7565; --faint:#a49b87;
+    --sage:#6e7b53; --sage-deep:#556040; --coral:#c56a49; --coral-soft:#d98a63;
+    --mustard:#ebc163; --line:rgba(58,52,42,.14); --line2:rgba(58,52,42,.09);
+    --serif:"Didot","Bodoni 72","Hoefler Text",Georgia,"Noto Serif TC","Songti TC",serif;
+    --serifcjk:"Noto Serif TC","Songti TC","Hoefler Text",Georgia,serif;
+    --script:"Snell Roundhand","Noteworthy","Segoe Script",cursive;
+    --hand:"Bradley Hand","Noteworthy","Segoe Print",cursive;
+    --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Segoe UI",sans-serif;
+    --mono:"SF Mono",ui-monospace,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.75;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 44px;}
+  section{padding:66px 0;}
+  section+section{border-top:1px solid var(--line2);}
+  .klabel{font-family:var(--hand);font-size:27px;color:var(--coral);margin-bottom:4px;line-height:1;}
+  h2{font-family:var(--serifcjk);font-size:38px;font-weight:900;letter-spacing:.01em;
+    color:var(--ink);margin-bottom:10px;}
+  h2 em{font-style:normal;color:var(--sage);}
+  .lead{color:var(--dim);font-size:18px;max-width:640px;margin-bottom:36px;}
+  .sage{color:var(--sage);} .coral{color:var(--coral);}
+  b{color:var(--ink);font-weight:800;}
+  code{font-family:var(--mono);background:rgba(197,106,73,.12);color:var(--coral);
+    padding:1px 7px;border-radius:6px;font-size:.88em;}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;text-align:center;padding:72px 0 76px;
+    background:
+      radial-gradient(1100px 620px at 50% -18%, rgba(110,123,83,.14), transparent 60%),
+      radial-gradient(760px 520px at 88% 8%, rgba(197,106,73,.10), transparent 62%),
+      var(--cream);
+    border-bottom:1px solid var(--line);}
+  .hero .top{font-family:var(--serif);letter-spacing:.42em;font-size:15px;color:var(--dim);
+    text-transform:uppercase;}
+  .hero .top .fl{color:var(--coral);}
+  .hero .hi{font-family:var(--script);font-size:44px;color:var(--coral);margin:26px 0 2px;
+    transform:rotate(-3deg);}
+  .hero h1{font-family:var(--serif);font-weight:900;font-size:76px;line-height:.98;
+    letter-spacing:.005em;color:var(--ink);}
+  .hero h1 .cjk{font-family:var(--serifcjk);}
+  .hero .script2{font-family:var(--script);font-size:60px;color:var(--sage);line-height:1;
+    margin-top:2px;transform:rotate(-2deg);}
+  .hero .sub{font-size:18px;color:var(--dim);max-width:600px;margin:26px auto 0;}
+  .wordmark{font-family:var(--sans);font-weight:900;font-size:16px;letter-spacing:.02em;color:var(--ink);}
+  .wordmark b{color:var(--coral);}
+  .pills{margin-top:30px;display:flex;gap:11px;flex-wrap:wrap;justify-content:center;}
+  .pills span{font-size:14px;color:var(--cream2);background:var(--sage);
+    border-radius:100px;padding:9px 20px;letter-spacing:.02em;box-shadow:0 6px 16px rgba(85,96,64,.22);}
+  .cta{display:inline-block;margin-top:34px;font-family:var(--sans);font-weight:800;font-size:16px;
+    color:#4a3f22;background:var(--mustard);border-radius:12px;padding:15px 40px;letter-spacing:.04em;
+    box-shadow:0 10px 24px rgba(235,193,99,.42);}
+  /* rotating stamp */
+  .stamp{position:absolute;top:40px;right:40px;width:118px;height:118px;
+    animation:spin 26s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .stamp text{fill:var(--sage-deep);font-family:var(--sans);font-weight:700;
+    font-size:9.4px;letter-spacing:.24em;}
+  .stamp .fl{font-size:30px;fill:var(--coral);}
+
+  /* ---------- steps ---------- */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:34px;}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 18px;position:relative;
+    box-shadow:0 10px 26px rgba(58,52,42,.05);}
+  .step .no{font-family:var(--serif);font-size:15px;color:var(--faint);letter-spacing:.1em;}
+  .step .ic{font-size:38px;line-height:1;margin:12px 0 14px;display:block;}
+  .step h4{font-family:var(--serifcjk);font-size:19px;font-weight:900;margin-bottom:6px;color:var(--ink);}
+  .step p{font-size:13.5px;color:var(--dim);line-height:1.6;}
+  .step.you{border-color:var(--coral);background:linear-gradient(180deg,rgba(197,106,73,.09),var(--card));}
+  .step.you .badge{position:absolute;top:-12px;left:18px;background:var(--coral);color:#fff;
+    font-family:var(--hand);font-size:15px;border-radius:100px;padding:2px 15px;}
+
+  /* ---------- pipeline diagram ---------- */
+  .diagram{background:var(--card);border:1px solid var(--line);border-radius:22px;
+    padding:36px 28px 26px;box-shadow:0 12px 30px rgba(58,52,42,.06);}
+  .diagram .cap{color:var(--faint);font-size:13px;text-align:center;margin-top:20px;
+    font-family:var(--hand);letter-spacing:.02em;}
+  svg{display:block;width:100%;height:auto;}
+
+  /* ---------- tool cards ---------- */
+  .stack{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .tool{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px 24px;box-shadow:0 10px 26px rgba(58,52,42,.05);}
+  .tool .dot{width:48px;height:48px;border-radius:14px;flex:none;display:flex;align-items:center;
+    justify-content:center;font-size:24px;background:var(--card2);border:1px solid var(--line);}
+  .tool h4{font-family:var(--serifcjk);font-size:19px;font-weight:900;margin-bottom:3px;color:var(--ink);}
+  .tool h4 small{color:var(--faint);font-weight:500;font-size:12px;font-family:var(--mono);margin-left:8px;}
+  .tool p{font-size:14px;color:var(--dim);}
+
+  /* ---------- install ---------- */
+  .inst{counter-reset:s;display:flex;flex-direction:column;gap:20px;}
+  .inst li{list-style:none;display:flex;gap:20px;align-items:flex-start;}
+  .inst li::before{counter-increment:s;content:counter(s);flex:none;
+    width:46px;height:46px;border-radius:50%;background:var(--coral);color:#fff;
+    font-family:var(--serif);font-weight:700;font-size:22px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 18px rgba(197,106,73,.32);}
+  .inst li div{padding-top:6px;}
+  .inst h4{font-family:var(--serifcjk);font-size:20px;font-weight:900;margin-bottom:3px;}
+  .inst p{color:var(--dim);font-size:15.5px;}
+  .say{margin-top:20px;background:var(--cream2);border:1px solid var(--line);
+    border-left:5px solid var(--coral);border-radius:16px;padding:22px 26px;}
+  .say .h{font-family:var(--hand);font-size:19px;color:var(--coral);margin-bottom:6px;}
+  .say .q{font-family:var(--serifcjk);font-size:25px;color:var(--ink);font-weight:700;}
+  .installs{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    box-shadow:0 10px 26px rgba(58,52,42,.05);}
+  .installs .hd{background:var(--card2);padding:13px 22px;font-size:13.5px;color:var(--dim);
+    border-bottom:1px solid var(--line);}
+  .installs ul{padding:16px 22px;columns:2;column-gap:34px;}
+  .installs li{font-size:15px;color:var(--ink);padding:6px 0;list-style:none;break-inside:avoid;}
+  .installs li b{color:var(--coral);} .installs li span{color:var(--dim);font-size:13px;}
+  .note{margin-top:16px;font-size:14px;color:var(--faint);}
+
+  /* ---------- quote band ---------- */
+  .quote{text-align:center;padding:20px 0 4px;}
+  .quote p{font-family:var(--script);font-size:40px;color:var(--sage);line-height:1.25;transform:rotate(-1.5deg);}
+
+  /* ---------- rules ---------- */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .rule{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;
+    box-shadow:0 8px 22px rgba(58,52,42,.05);}
+  .rule .k{font-family:var(--serifcjk);color:var(--sage);font-weight:900;font-size:18px;margin-bottom:4px;}
+  .rule p{font-size:14.5px;color:var(--dim);}
+
+  /* ---------- marquee + footer ---------- */
+  .marquee{overflow:hidden;white-space:nowrap;padding:30px 0 6px;border-top:1px solid var(--line2);}
+  .marquee span{font-family:var(--serif);font-weight:900;font-size:86px;letter-spacing:.02em;
+    color:transparent;-webkit-text-stroke:1.4px rgba(58,52,42,.32);}
+  footer{text-align:center;padding:26px 0 72px;color:var(--faint);font-size:13.5px;}
+  footer .big{font-family:var(--script);font-size:34px;color:var(--coral);margin-bottom:12px;transform:rotate(-2deg);}
+  footer .wm{font-family:var(--sans);font-weight:900;color:var(--ink);}
+  footer .wm b{color:var(--coral);}
+
+  @media (max-width:760px){
+    .steps{grid-template-columns:1fr 1fr;} .stack,.rules{grid-template-columns:1fr;}
+    .hero h1{font-size:52px;} .hero .script2{font-size:42px;} .installs ul{columns:1;}
+    .stamp{display:none;}
+  }
+  @media print{
+    body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .stamp{animation:none;}
+    section,.hero,.steps,.diagram,.tool,.step,.rule,.installs,.say,.marquee{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <svg class="stamp" viewBox="0 0 120 120">
+    <defs><path id="circ" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
+    <text><textPath href="#circ" startOffset="0">REMOTE EDITOR KIT · BY FYN · REMOTE EDITOR KIT · BY FYN · </textPath></text>
+    <text class="fl" x="60" y="72" text-anchor="middle">✻</text>
+  </svg>
+  <div class="wrap">
+    <div class="top"><span class="fl">✻</span>&nbsp; AI CONTENT WORKFLOW &nbsp;<span class="fl">✻</span></div>
+    <div class="hi" style="font-size:64px;margin:30px 0 6px;">Hi, I'm Fyn —</div>
+    <p class="sub">剪空白、繁中＋英文雙語字幕、動態圖卡、臉部推近、降噪、配樂、匯出——
+       全部自動完成，成品和我的一樣。<span class="wordmark">remote<b>FAM</b></span> · Remote Editor Kit 使用指南。</p>
+    <div class="pills">
+      <span>🎬 自動粗剪</span><span>📝 雙語字幕</span><span>💎 動態圖卡</span>
+      <span>🔍 臉部推近</span><span>🎵 智慧配樂</span><span>📤 一鍵匯出</span>
+    </div>
+    <div class="cta">↓ 開始安裝</div>
+  </div>
+</div>
+
+<!-- ===== 原理 ===== -->
+<section><div class="wrap">
+  <div class="klabel">how it works</div>
+  <h2>五個步驟，你只做<em>一個</em>。</h2>
+  <p class="lead">其他四步，機器人全包。它們各自用一個成熟的開源工具，像生產線一樣一棒接一棒。</p>
+  <div class="steps">
+    <div class="step you"><div class="badge">你做這個</div>
+      <span class="no">01</span><span class="ic">📁</span>
+      <h4>丟影片</h4>
+      <p>把原始影片拖進來，跟 Claude 說「幫我剪這支」。這是你唯一要做的事。</p></div>
+    <div class="step"><span class="no">02</span><span class="ic">👂</span>
+      <h4>聽寫逐字稿</h4>
+      <p>Whisper 把你講的每個字＋出現的秒數全部記下來，順便找出所有空白。</p></div>
+    <div class="step"><span class="no">03</span><span class="ic">🖊️</span>
+      <h4>Claude 決策</h4>
+      <p>Claude 讀完逐字稿，決定剪哪裡、字幕怎麼寫、圖卡放哪，寫成一份<code>script.json</code>。</p></div>
+    <div class="step"><span class="no">04</span><span class="ic">🎨</span>
+      <h4>畫面與動畫</h4>
+      <p>Hyperframes 依 <code>script.json</code> 產生字幕、液態玻璃圖卡、臉部推近，再渲染成畫面。</p></div>
+    <div class="step"><span class="no">05</span><span class="ic">🎞️</span>
+      <h4>合成匯出</h4>
+      <p>FFmpeg 疊配樂、自動壓低音樂讓人聲當主角，輸出 <code>final.mp4</code>。</p></div>
+  </div>
+</div></section>
+
+<!-- ===== 生產線 ===== -->
+<section><div class="wrap">
+  <div class="klabel">the pipeline</div>
+  <h2>一條龍：<em>原始檔 → 成品</em></h2>
+  <p class="lead">同一條流水線，每支影片都走一樣的路。灰色是你，珊瑚色是機器人自動完成。</p>
+  <div class="diagram">
+    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang TC',sans-serif">
+      <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#a49b87"/></marker></defs>
+      <g text-anchor="middle">
+        <rect x="8" y="92" width="120" height="66" rx="16" fill="#FDFBF4" stroke="#c56a49" stroke-width="1.8"/>
+        <text x="68" y="122" fill="#3a342a" font-size="17" font-weight="700">原始影片</text>
+        <text x="68" y="143" fill="#7c7565" font-size="12">你的 .mp4</text>
+        <rect x="176" y="92" width="120" height="66" rx="16" fill="#FDFBF4" stroke="rgba(58,52,42,.16)"/>
+        <text x="236" y="118" fill="#3a342a" font-size="15" font-weight="700">聽寫＋找空白</text>
+        <text x="236" y="139" fill="#6e7b53" font-size="11">Whisper</text>
+        <rect x="344" y="92" width="120" height="66" rx="16" fill="#FDFBF4" stroke="rgba(58,52,42,.16)"/>
+        <text x="404" y="118" fill="#3a342a" font-size="15" font-weight="700">Claude 決策</text>
+        <text x="404" y="139" fill="#c56a49" font-size="11">script.json</text>
+        <rect x="512" y="92" width="120" height="66" rx="16" fill="#FDFBF4" stroke="rgba(58,52,42,.16)"/>
+        <text x="572" y="114" fill="#3a342a" font-size="15" font-weight="700">剪空白＋降噪</text>
+        <text x="572" y="133" fill="#3a342a" font-size="13" font-weight="700">＋動畫渲染</text>
+        <text x="572" y="150" fill="#6e7b53" font-size="10.5">FFmpeg · Hyperframes</text>
+        <rect x="680" y="92" width="120" height="66" rx="16" fill="#eef1e3" stroke="#6e7b53" stroke-width="1.8"/>
+        <text x="740" y="118" fill="#3a342a" font-size="16" font-weight="700">成品</text>
+        <text x="740" y="139" fill="#556040" font-size="11">final.mp4</text>
+      </g>
+      <g stroke="#a49b87" stroke-width="2" marker-end="url(#ar)">
+        <line x1="130" y1="125" x2="172" y2="125"/><line x1="298" y1="125" x2="340" y2="125"/>
+        <line x1="466" y1="125" x2="508" y2="125"/><line x1="634" y1="125" x2="676" y2="125"/>
+      </g>
+      <g text-anchor="middle" font-size="12">
+        <text x="68"  y="44" fill="#7c7565">你</text>
+        <line x1="68" y1="52" x2="68" y2="86" stroke="#a49b87" stroke-width="1.5" marker-end="url(#ar)"/>
+        <text x="404" y="44" fill="#c56a49" font-weight="700">機器人自動</text>
+        <line x1="404" y1="52" x2="404" y2="86" stroke="#c56a49" stroke-width="1.5" marker-end="url(#ar)"/>
+        <text x="740" y="200" fill="#556040">直接上傳 IG / YT</text>
+        <line x1="740" y1="162" x2="740" y2="186" stroke="#6e7b53" stroke-width="1.5" marker-end="url(#ar)"/>
+      </g>
+    </svg>
+    <div class="cap">script.json = 唯一的剪輯決策檔　·　改它就能重剪　·　100% 可重現</div>
+  </div>
+</div></section>
+
+<!-- ===== 引擎 ===== -->
+<section><div class="wrap">
+  <div class="klabel">the engine</div>
+  <h2>它站在這些<em>開源軟體</em>的肩膀上</h2>
+  <p class="lead">系統本身（工作流程、腳本、設計系統）是 Fyn 原創；底層借重幾個世界級的免費開源工具。
+     安裝時全部自動裝好，你不用懂它們。</p>
+  <div class="stack">
+    <div class="tool"><div class="dot">🎬</div><div>
+      <h4>Hyperframes <small>HeyGen · Apache 2.0</small></h4>
+      <p>HTML 原生影片合成引擎——字幕、液態玻璃圖卡、臉部推近的動畫與渲染都靠它。這套 kit 的畫面來源。</p></div></div>
+    <div class="tool"><div class="dot">👂</div><div>
+      <h4>Whisper <small>whisper.cpp · MIT</small></h4>
+      <p>OpenAI 的語音辨識，本地跑（含中文模型）。把你講的每個字＋時間戳記聽寫下來，字幕與剪點都從這來。</p></div></div>
+    <div class="tool"><div class="dot">🎞️</div><div>
+      <h4>FFmpeg <small>LGPL / GPL</small></h4>
+      <p>影音處理的瑞士刀。負責剪接、降噪、配樂 ducking、壓縮匯出。</p></div></div>
+    <div class="tool"><div class="dot">✨</div><div>
+      <h4>GSAP + Chrome <small>免費商用 · 各自授權</small></h4>
+      <p>GSAP 讓圖卡 pop 進場、懸浮呼吸；Chrome 是 Hyperframes 逐格出圖的畫布。</p></div></div>
+  </div>
+  <p class="note">＊ 開源引擎由安裝器自動下載、未修改、未內附原始碼；完整授權見 kit 的 <code>CREDITS.md</code>。</p>
+</div></section>
+
+<!-- ===== quote ===== -->
+<section class="quote"><div class="wrap"><p>I believe content should be fast, beautiful,<br>and still sound like you.</p></div></section>
+
+<!-- ===== 安裝 ===== -->
+<section><div class="wrap">
+  <div class="klabel">install it</div>
+  <h2>三步就好，<em>不用打任何指令</em></h2>
+  <p class="lead">你不需要會寫程式。你只要裝兩個 App，然後對 Claude 講一句話——它會自己把所有東西裝好、逐項驗證。</p>
+  <ul class="inst">
+    <li><div><h4>裝好 Claude Code 和 Google Chrome</h4>
+      <p>兩個免費 App。Claude Code 是你的剪輯師，Chrome 是它出圖的畫布。</p></div></li>
+    <li><div><h4>用 Claude Code 打開這個 kit 資料夾</h4>
+      <p>解壓縮後，在 Claude Code 裡打開 <code>remote-editor-kit</code> 資料夾。</p></div></li>
+    <li><div><h4>把下面這句話貼給 Claude</h4>
+      <p>它會執行內建安裝器 <code>setup.sh</code>，自動下載安裝並逐項打勾。中斷了再貼一次會自動續傳。</p>
+      <div class="say"><div class="h">貼這句 ✎</div>
+        <div class="q">「請幫我安裝這個影片剪輯系統需要的所有環境」</div></div>
+    </div></li>
+  </ul>
+  <div class="installs">
+    <div class="hd">setup.sh 會自動幫你裝好（共 7 項，約 10–20 分鐘、下載約 2GB）：</div>
+    <ul>
+      <li><b>Homebrew</b> <span>／ 套件管家</span></li>
+      <li><b>Node.js</b> <span>／ 引擎執行環境</span></li>
+      <li><b>FFmpeg</b> <span>／ 影音處理（含字幕引擎）</span></li>
+      <li><b>Whisper ＋ 中文模型</b> <span>／ 語音辨識 1.5GB</span></li>
+      <li><b>降噪模型 cb.rnnn</b> <span>／ 去背景噪音</span></li>
+      <li><b>Google Chrome</b> <span>／ 若尚未安裝</span></li>
+      <li><b>Hyperframes ＋ 相依套件</b> <span>／ 渲染引擎</span></li>
+    </ul>
+  </div>
+  <p class="note">系統需求：macOS（Apple Silicon 或 Intel）· 硬碟 ≥ 5GB · 記憶體建議 ≥ 16GB · 安裝過程需連網、可能要輸入一次 Mac 密碼（安裝軟體的正常流程）。</p>
+</div></section>
+
+<!-- ===== 怎麼用 ===== -->
+<section><div class="wrap">
+  <div class="klabel">start editing</div>
+  <h2>裝好之後，<em>怎麼用</em></h2>
+  <div class="stack">
+    <div class="tool"><div class="dot">📥</div><div>
+      <h4>1 · 丟影片</h4><p>把影片檔拖進 kit 資料夾（或直接拖進 Claude 對話）。</p></div></div>
+    <div class="tool"><div class="dot">💬</div><div>
+      <h4>2 · 說一句話</h4><p>跟 Claude 說 <b>「幫我剪這支影片」</b>。想要什麼風格、重點，直接用講的。</p></div></div>
+    <div class="tool"><div class="dot">👀</div><div>
+      <h4>3 · 每一階段看畫面確認</h4><p>Claude 會一步步帶你走，每個階段給你看畫面；不喜歡就說，它重做。</p></div></div>
+    <div class="tool"><div class="dot">📤</div><div>
+      <h4>4 · 拿成品</h4><p>成品在 <code>out/final.mp4</code>（高畫質）＋ <code>out/reel_web.mp4</code>（上傳版）。</p></div></div>
+  </div>
+  <div class="say" style="margin-top:22px;border-left-color:var(--sage);">
+    <div class="h" style="color:var(--sage);">要重剪？</div>
+    <div class="q" style="font-size:21px;">改一下 <code>script.json</code>（或直接跟 Claude 說要改哪裡），重跑就好——一切可重現。</div>
+  </div>
+
+  <!-- Higgsfield B-roll -->
+  <div class="tool" style="margin-top:22px;border-color:var(--sage);
+       background:linear-gradient(180deg,rgba(110,123,83,.08),var(--card));align-items:flex-start;">
+    <div class="dot" style="border-color:var(--sage);">🎞️</div>
+    <div>
+      <h4 style="color:var(--sage);">加分功能 · AI 生成 B-roll <small style="color:var(--faint);font-weight:600;">選配 · 需自備 Higgsfield 額度</small></h4>
+      <p style="margin-bottom:12px;">沒有畫面素材也不怕。接上 <b>Higgsfield</b>，Claude 會從你的台詞挑出有畫面感的時刻，
+        <b>先把要生成的 prompt 和秒數列給你確認</b>，你點頭才生成、下載、排進影片——蓋住臉的期間字幕自動抬高。
+        有 Soul 角色的話，生成的人物還能是「你」。</p>
+      <div style="display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--dim);">
+        <span><b class="coral" style="font-family:var(--serif);">1</b>　claude.ai → Settings → Connectors 連上 Higgsfield MCP</span>
+        <span><b class="coral" style="font-family:var(--serif);">2</b>　說「幫我生成一段咖啡廳工作的 B-roll」</span>
+      </div>
+      <p class="note" style="margin-top:12px;">＊ 完全選配。沒接 Higgsfield，其他功能照常；也能直接放自備素材當 B-roll。</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ===== 規則 ===== -->
+<section><div class="wrap">
+  <div class="klabel">the rules</div>
+  <h2>幾條讓成品<em>穩定的鐵律</em></h2>
+  <div class="rules">
+    <div class="rule"><div class="k">字幕永遠不擋臉</div><p>字幕帶固定在下巴以下、胸口位置；圖卡放字幕帶下方或頂部安全區。</p></div>
+    <div class="rule"><div class="k">一個決策檔</div><p><code>script.json</code> 是唯一真相：剪點、字幕、圖卡都在裡面，改它＝重剪，完全可重現。</p></div>
+    <div class="rule"><div class="k">別手改 hf/ 資料夾</div><p>那是自動產生的；要改就改 <code>script.json</code>，重跑會重生。</p></div>
+    <div class="rule"><div class="k">配樂用你有授權的音樂</div><p>系統會自動 ducking 讓人聲當主角，但音樂版權要自己確認。</p></div>
+    <div class="rule"><div class="k">換品牌只改一個檔</div><p>顏色/字型在 <code>templates/design-tokens.css</code>，或選內建風格（見 <code>STYLES.md</code>）。</p></div>
+    <div class="rule"><div class="k">一份授權一人</div><p>成品 100% 歸你；系統本身禁止轉售、散布。詳見 <code>LICENSE.md</code>。</p></div>
+  </div>
+</div></section>
+
+<!-- ===== marquee + footer ===== -->
+<div class="marquee"><span>EDIT&nbsp;/&nbsp;CAPTION&nbsp;/&nbsp;ANIMATE&nbsp;/&nbsp;SHIP&nbsp;/&nbsp;EDIT&nbsp;/&nbsp;CAPTION&nbsp;/&nbsp;ANIMATE&nbsp;/&nbsp;SHIP&nbsp;/</span></div>
+<footer><div class="wrap">
+  <div class="big">see you inside, friend ✿</div>
+  <div class="wm">remote<b>FAM</b> · by Fyn</div><br>
+  Remote Editor Kit　© 2026 Fyn Chang ‧ 奇蹟研究所 Miracle Academy<br>
+  授權：Miracle Academy／Miracle CEO／RemoteFAM 遊牧一家 成員及直接購買者　·　第三方開源元件見 CREDITS.md
+</div></footer>
+
+</body>
+</html>
