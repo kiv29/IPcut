@@ -1,0 +1,42 @@
+{
+  "_風格": "5 套內建風格擇一：signature(預設)/card-takeover/editorial-red/paper-serif/midnight-neon，見 STYLES.md",
+  "style": "signature",
+  "_說明": "這是完整註解版範例。時間軸有兩種：keep 用『來源』秒數，lines/zooms/mg/broll 用『成品』秒數（剪完空白後）。對時請看 work/transcript-final.json。",
+
+  "source": "raw/我的影片.MOV",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+
+  "audio": {
+    "denoise": true,
+    "music": "assets/bgm.m4a",
+    "musicDb": -22,
+    "duck": true
+  },
+
+  "keep": [[0.0, 12.4], [14.2, 33.0], [35.5, 58.0]],
+
+  "zooms": [
+    { "t": [5.0, 7.5], "amount": 1.12, "cx": 540, "cy": 860 }
+  ],
+
+  "lines": [
+    { "s": 0.2, "e": 2.4, "zh": "我的 Instagram 在 184 天突破 <hl>10萬粉</hl>", "en": "100K IG followers in 184 days" },
+    { "s": 2.4, "e": 5.0, "zh": "而且影片全部是 <chip>AI</chip> 幫我剪的", "en": "and AI edits every video for me" },
+    { "s": 26.2, "e": 29.7, "zh": "看這個畫面就知道差多少", "en": "just look at the difference", "lift": 1320 }
+  ],
+
+  "mg": [
+    { "type": "statCounter", "t": [0.4, 2.6], "icon": "instagram", "value": 100000, "label": "粉絲" },
+    { "type": "stamp", "t": [8.0, 11.0], "text": "GAME CHANGER", "sub": "整個流程都變了", "color": "yellow" },
+    { "type": "avatarBadge", "t": [14.0, 17.5], "img": "assets/guest.png", "name": "ALEX HORMOZI" },
+    { "type": "glowFrame", "t": [20.0, 24.0], "top": 1080, "height": 210 },
+    { "type": "sparkles", "t": [30.0, 33.0], "points": [[330, 260], [540, 200], [760, 250]] },
+    { "type": "cta", "t": [52.0, 57.5], "text": "追蹤看更多" }
+  ],
+
+  "broll": [
+    { "src": "assets/brollA.mp4", "t": [26.2, 29.7], "mode": "fullscreen", "audio": "keep" }
+  ]
+}
