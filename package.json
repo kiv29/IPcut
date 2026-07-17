@@ -1,0 +1,13 @@
+{
+  "name": "remote-editor-kit",
+  "version": "1.0.0",
+  "description": "「為你剪片」AI 剪輯系統 — for Claude Code. Copyright (c) 2026 Fyn Chang.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "edit": "node engine/run.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}
