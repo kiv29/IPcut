@@ -1,0 +1,153 @@
+{
+  "source": "raw/morning-hike.mp4",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "audio": {
+    "denoise": true
+  },
+  "lines": [
+    {
+      "s": 0.2,
+      "e": 2.0,
+      "zh": "<hl>久違了</hl>山",
+      "en": "the mountains — it's been a while"
+    },
+    {
+      "s": 2.0,
+      "e": 5.4,
+      "zh": "今天應該算是第九天還是第十天吧",
+      "en": "day nine or ten of the trip, I think"
+    },
+    {
+      "s": 5.5,
+      "e": 8.1,
+      "zh": "昨天前天身體狀況不是很好",
+      "en": "wasn't feeling great the past two days"
+    },
+    {
+      "s": 8.12,
+      "e": 10.7,
+      "zh": "然後還有點<hl>小發燒</hl>",
+      "en": "even running a slight fever"
+    },
+    {
+      "s": 10.75,
+      "e": 12.7,
+      "zh": "所以就沒有辦法爬山",
+      "en": "so no hiking for me"
+    },
+    {
+      "s": 12.75,
+      "e": 15.3,
+      "zh": "<hl>終於又回來了</hl>感覺真的很棒",
+      "en": "finally back — it feels amazing"
+    },
+    {
+      "s": 15.35,
+      "e": 16.45,
+      "zh": "每天早上來這邊",
+      "en": "coming here every morning"
+    },
+    {
+      "s": 16.5,
+      "e": 19.6,
+      "zh": "走一走<hl>心情</hl>都會變得非常好",
+      "en": "a walk here just resets my mood"
+    }
+  ],
+  "mg": [
+    {
+      "type": "statCounter",
+      "t": [
+        2.4,
+        5.3
+      ],
+      "value": 10,
+      "prefix": "Day ",
+      "label": "旅程",
+      "small": true
+    },
+    {
+      "type": "glassCard",
+      "t": [
+        8.4,
+        12.4
+      ],
+      "icon": "cross",
+      "text": "身體亮紅燈",
+      "fontSize": 36
+    },
+    {
+      "type": "stamp",
+      "t": [
+        13.0,
+        15.2
+      ],
+      "text": "I'M BACK",
+      "sub": "終於回到山裡",
+      "color": "yellow"
+    },
+    {
+      "type": "sparkles",
+      "t": [
+        13.2,
+        15.2
+      ],
+      "points": [
+        [
+          300,
+          420
+        ],
+        [
+          560,
+          330
+        ],
+        [
+          820,
+          430
+        ]
+      ]
+    },
+    {
+      "type": "statCounter",
+      "t": [
+        16.8,
+        19.5
+      ],
+      "icon": "heart",
+      "value": 100,
+      "suffix": "%",
+      "label": "心情充電",
+      "small": true
+    }
+  ],
+  "keep": [
+    [
+      0,
+      5.55
+    ],
+    [
+      5.95,
+      15.75
+    ],
+    [
+      18.35,
+      19.45
+    ],
+    [
+      20.2,
+      23.47
+    ]
+  ],
+  "zooms": [
+    {
+      "t": [
+        12.8,
+        15.2
+      ],
+      "amount": 1.1,
+      "cy": 800
+    }
+  ]
+}
