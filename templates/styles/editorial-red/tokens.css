@@ -1,0 +1,210 @@
+/* editorial-red — 以 signature 正典為底，疊上本風格配色/字體（沿用 .wn-* 類別，引擎自動套用） */
+/*
+ * design-tokens.css — Fyn「為你剪片」品牌設計系統
+ * Copyright (c) 2026 Fyn Chang. All rights reserved.
+ *
+ * 畫布：1080×1920（9:16 直式）
+ * 版面鐵律：
+ *   - 字幕帶底部 bottom: 630px（下巴以下、胸口位置，永不擋臉）
+ *   - 動態圖卡在字幕帶下方 top: 1330px 左右，或頂部 y<520
+ *   - 一切置中對齊 x=540
+ */
+
+@font-face {
+  font-family: "Noto Sans TC";
+  src: url("fonts/NotoSansTC-500.woff2") format("woff2");
+  font-weight: 500; font-display: block;
+}
+@font-face {
+  font-family: "Noto Sans TC";
+  src: url("fonts/NotoSansTC-900.woff2") format("woff2");
+  font-weight: 900; font-display: block;
+}
+@font-face {
+  font-family: "Noto Serif TC";
+  src: url("fonts/NotoSerifTC-600.woff2") format("woff2");
+  font-weight: 600; font-display: block;
+}
+@font-face {
+  font-family: "Noto Serif TC";
+  src: url("fonts/NotoSerifTC-900.woff2") format("woff2");
+  font-weight: 900; font-display: block;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-700.woff2") format("woff2");
+  font-weight: 700; font-display: block;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-800.woff2") format("woff2");
+  font-weight: 800; font-display: block;
+}
+
+:root {
+  /* 品牌色 */
+  --wn-gold: #F4C430;          /* 主品牌金：關鍵字、數字、框線 */
+  --wn-gold-deep: #B8860B;     /* 金色立體陰影 */
+  --wn-chip-yellow: #FFD23F;   /* 亮黃貼片（kinetic chip / 名牌膠囊） */
+  --wn-green: #3ECF8E;         /* 輔助綠貼片 */
+  --wn-red: #E0554D;           /* 負面/警示紅 */
+  --wn-ink: #0d0d0d;           /* 貼片上的黑字 */
+  --wn-dark-pill: rgba(12, 12, 14, 0.78); /* 深色膠囊底 */
+  --wn-white: #ffffff;
+
+  /* 字幕字級（1080 寬） */
+  --wn-cap-zh-size: 42px;
+  --wn-cap-en-size: 29px;
+
+  /* 液態玻璃（liquid glass）配方 */
+  --wn-glass-bg: rgba(255, 255, 255, 0.16);
+  --wn-glass-border: rgba(255, 255, 255, 0.55);
+  --wn-glass-blur: blur(16px) saturate(1.25);
+  --wn-glass-radius: 30px;
+  --wn-glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; background: transparent; overflow: hidden; }
+
+#wn-stage { position: absolute; inset: 0; pointer-events: none; }
+
+/* ---------- 字幕 ---------- */
+.wn-cap-stage { position: absolute; left: 0; right: 0; bottom: 630px; height: 0; }
+.wn-cap-line {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 0 70px;
+  opacity: 0; visibility: hidden;
+}
+.wn-cap-zh {
+  max-width: 940px; text-align: center;
+  font-family: "Noto Sans TC", sans-serif; font-weight: 500;
+  font-size: var(--wn-cap-zh-size); line-height: 1.3; letter-spacing: 0.02em;
+  color: var(--wn-white);
+  text-shadow:
+    -1px -1px 0 rgba(0,0,0,0.4), 1px -1px 0 rgba(0,0,0,0.4),
+    -1px 1px 0 rgba(0,0,0,0.4), 1px 1px 0 rgba(0,0,0,0.4),
+    0 2px 8px rgba(0,0,0,0.9), 0 7px 24px rgba(0,0,0,0.8);
+}
+.wn-cap-zh .hl { color: var(--wn-gold); font-weight: 900; }
+/* 亮黃貼片字（kinetic 風）：黃底黑粗字圓角塊 */
+.wn-cap-zh .chip {
+  display: inline-block; background: var(--wn-chip-yellow); color: var(--wn-ink);
+  font-weight: 900; border-radius: 12px; padding: 2px 14px; margin: 0 4px;
+  text-shadow: none; box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  transform: rotate(-1.5deg);
+}
+.wn-cap-en {
+  max-width: 940px; text-align: center;
+  font-family: "Montserrat", sans-serif; font-weight: 700;
+  font-size: var(--wn-cap-en-size); line-height: 1.25; letter-spacing: 0.01em;
+  color: rgba(255,255,255,0.94);
+  text-shadow:
+    -1px -1px 0 rgba(0,0,0,0.38), 1px -1px 0 rgba(0,0,0,0.38),
+    -1px 1px 0 rgba(0,0,0,0.38), 1px 1px 0 rgba(0,0,0,0.38),
+    0 2px 8px rgba(0,0,0,0.9), 0 6px 20px rgba(0,0,0,0.8);
+}
+
+/* ---------- 動態圖卡 ---------- */
+.wn-beat { position: absolute; opacity: 0; visibility: hidden; }
+
+/* 液態玻璃卡 */
+.wn-glass {
+  display: flex; align-items: center; justify-content: center; gap: 22px;
+  background: var(--wn-glass-bg);
+  backdrop-filter: var(--wn-glass-blur);
+  -webkit-backdrop-filter: var(--wn-glass-blur);
+  border: 1px solid var(--wn-glass-border);
+  border-radius: var(--wn-glass-radius);
+  box-shadow: var(--wn-glass-shadow);
+  padding: 26px 44px;
+}
+
+/* 金色大數字（count-up 用） */
+.wn-gold-num {
+  font-family: "Noto Sans TC", "Montserrat", sans-serif; font-weight: 900;
+  font-size: 84px; line-height: 1; color: var(--wn-gold);
+  text-shadow: 0 3px 0 var(--wn-gold-deep), 0 8px 22px rgba(0,0,0,0.35);
+  white-space: nowrap;
+}
+.wn-gold-num.small { font-size: 62px; }
+.wn-tag-zh {
+  font-family: "Noto Sans TC", sans-serif; font-weight: 900;
+  font-size: 34px; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+  align-self: flex-end; padding-bottom: 8px; white-space: nowrap;
+}
+
+/* 印章貼片（stamp）：亮色圓角大字，微轉 -2° */
+.wn-stamp {
+  display: inline-flex; align-items: center; gap: 14px;
+  background: var(--wn-chip-yellow); color: var(--wn-ink);
+  font-family: "Montserrat", "Noto Sans TC", sans-serif; font-weight: 800;
+  font-size: 44px; border-radius: 18px; padding: 14px 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+.wn-stamp.green { background: var(--wn-green); }
+.wn-stamp.red { background: var(--wn-red); color: #fff; }
+
+/* 深色小膠囊（stamp 下的副標） */
+.wn-sub-pill {
+  background: var(--wn-dark-pill); color: #fff;
+  font-family: "Noto Sans TC", sans-serif; font-weight: 500; font-size: 28px;
+  border-radius: 100px; padding: 10px 26px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+/* 白框圓形頭像 + 名牌膠囊 */
+.wn-avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.wn-avatar {
+  width: 132px; height: 132px; border-radius: 50%;
+  border: 5px solid #fff; object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.wn-name-pill {
+  background: var(--wn-chip-yellow); color: var(--wn-ink);
+  font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 24px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  border-radius: 100px; padding: 8px 22px; margin-top: -14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* 金色關注框（框住字幕或臉的發光框） */
+.wn-glow-frame {
+  position: absolute; border-radius: 28px;
+  border: 3px solid rgba(244, 196, 48, 0.95);
+  box-shadow: 0 0 34px rgba(244, 196, 48, 0.55), inset 0 0 30px rgba(244, 196, 48, 0.18);
+}
+
+/* 金色小箭頭（指向字幕/圖卡） */
+.wn-arrow { color: var(--wn-gold); font-size: 54px; line-height: 1;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.5); }
+
+/* 亮金 sparkle（✦）點綴 */
+.wn-sparkle { position: absolute; color: var(--wn-gold); font-size: 40px;
+  text-shadow: 0 0 18px rgba(244,196,48,0.8); }
+
+/* CTA 追蹤鈕 */
+.wn-cta {
+  display: inline-flex; align-items: center; gap: 16px;
+  background: var(--wn-gold); color: var(--wn-ink);
+  font-family: "Noto Sans TC", sans-serif; font-weight: 900; font-size: 40px;
+  border-radius: 100px; padding: 18px 44px;
+  box-shadow: 0 3px 0 var(--wn-gold-deep), 0 14px 34px rgba(0,0,0,0.4);
+}
+
+
+/* ============ editorial-red 編輯黑紅（紅框重點） ============ */
+:root{--wn-gold:#E5484D;--wn-gold-deep:#8f2b2f;--wn-chip-yellow:#E5484D;--wn-red:#E5484D;}
+.wn-cap-zh{font-weight:900;}
+.wn-cap-zh .hl{color:#fff;background:#E5484D;font-weight:900;border-radius:8px;padding:0 14px 4px;text-shadow:none;}
+.wn-cap-zh .chip{background:#E5484D;color:#fff;transform:rotate(-1deg);}
+.wn-cap-en{text-transform:uppercase;letter-spacing:.14em;font-weight:800;font-size:26px;color:rgba(255,255,255,.7);}
+.wn-stamp{background:#fff;color:#111;font-family:"Montserrat","Noto Sans TC",sans-serif;font-weight:800;border-radius:12px;transform:none;box-shadow:0 12px 30px rgba(0,0,0,.5);}
+.wn-stamp.red{background:#E5484D;color:#fff;} .wn-stamp.green{background:#fff;color:#111;}
+.wn-sub-pill{background:#E5484D;color:#fff;font-weight:900;border-radius:10px;}
+.wn-gold-num{color:#fff;text-shadow:0 3px 0 #E5484D,0 8px 22px rgba(0,0,0,.4);}
+.wn-glass{background:rgba(24,25,29,.86);backdrop-filter:none;-webkit-backdrop-filter:none;border:1px solid rgba(255,255,255,.14);border-radius:18px;}
+.wn-name-pill{background:#E5484D;color:#fff;} .wn-cta{background:#E5484D;color:#fff;}
+.wn-glow-frame{border-color:#E5484D;box-shadow:0 0 30px rgba(229,72,77,.5);}
+.wn-arrow,.wn-sparkle{color:#E5484D;}

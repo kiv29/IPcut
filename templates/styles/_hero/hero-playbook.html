@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Style Test 01 — 三風格模擬</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=block" rel="stylesheet">
+<style>
+@font-face{font-family:"Noto Sans TC";src:url("../../fonts/NotoSansTC-900.woff2") format("woff2");font-weight:900;font-display:block;}
+@font-face{font-family:"Noto Sans TC";src:url("../../fonts/NotoSansTC-500.woff2") format("woff2");font-weight:500;font-display:block;}
+@font-face{font-family:"Songti TC";src:local("Songti TC");font-weight:900;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000;}
+.scene{position:absolute;inset:0;opacity:0;visibility:hidden;}
+/* ---------- 假人偶 ---------- */
+.dummy{position:absolute;}
+.dummy .mouth{transform-origin:50% 50%;}
+/* ================= S1 編輯黑紅 ================= */
+#s1{background:
+  radial-gradient(900px 700px at 50% 8%, rgba(255,255,255,.05), rgba(255,255,255,0) 60%),
+  repeating-linear-gradient(0deg,#131417 0 3px,#101114 3px 6px),#101114;}
+#s1 .kicker{position:absolute;top:214px;left:0;right:0;text-align:center;
+  font:800 30px Montserrat;letter-spacing:.22em;color:rgba(255,255,255,.55);}
+#s1 .head{position:absolute;top:258px;left:0;right:0;text-align:center;
+  font:900 84px "Noto Sans TC";color:#fff;}
+#s1 .head .rd{background:#E5484D;padding:2px 18px 8px;border-radius:10px;display:inline-block;}
+#s1 svg.tri{position:absolute;left:150px;top:430px;}
+#s1 .pill{position:absolute;font:800 27px Montserrat;color:#111;background:#fff;
+  padding:12px 22px 14px;border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,.5);opacity:0;}
+#s1 .cal{position:absolute;left:0;right:0;top:1012px;display:flex;gap:12px;justify-content:center;opacity:0;}
+#s1 .cal i{width:56px;height:56px;border-radius:10px;background:#22242a;border:2px solid #3a3d45;}
+#s1 .speed{position:absolute;left:0;right:0;top:452px;text-align:center;
+  font:900 92px Montserrat;color:#fff;opacity:0;}
+#s1 .speed b{color:#E5484D;}
+#s1 .speed small{display:block;font:800 30px "Noto Sans TC";color:rgba(255,255,255,.6);margin-top:8px;}
+#s1 .card{position:absolute;left:70px;right:70px;top:1330px;height:640px;border-radius:36px;
+  background:linear-gradient(180deg,#23252b,#191b1f);box-shadow:0 24px 60px rgba(0,0,0,.6);overflow:hidden;}
+#s1 .capzh{position:absolute;left:0;right:0;top:1160px;text-align:center;
+  font:900 64px "Noto Sans TC";color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.8);}
+#s1 .capen{position:absolute;left:0;right:0;top:1252px;text-align:center;
+  font:800 26px Montserrat;letter-spacing:.14em;color:rgba(255,255,255,.65);}
+/* ================= S2 紙感襯線 ================= */
+#s2{background:
+  radial-gradient(1200px 900px at 82% -8%, rgba(190,178,150,.28), rgba(190,178,150,0) 60%),
+  radial-gradient(1000px 800px at -10% 108%, rgba(190,178,150,.22), rgba(190,178,150,0) 55%),#F5F1E8;}
+#s2 .nowpill{position:absolute;top:218px;left:0;right:0;text-align:center;opacity:0;}
+#s2 .nowpill span{display:inline-block;font:800 26px Montserrat;letter-spacing:.2em;color:#F5F1E8;
+  background:#151310;padding:12px 26px 14px;border-radius:12px;}
+#s2 .head{position:absolute;top:288px;left:0;right:0;text-align:center;
+  font:900 128px "Songti TC";color:#151310;}
+#s2 .head i{font-style:normal;color:#C9694A;}
+#s2 .doc{position:absolute;left:160px;top:560px;width:760px;height:430px;border-radius:24px;
+  background:#FFFDF8;box-shadow:0 26px 70px rgba(40,32,16,.22);padding:44px 48px;overflow:hidden;opacity:0;}
+#s2 .doc .ln{height:22px;border-radius:11px;background:#E3DCCB;margin-bottom:26px;}
+#s2 .doc .hl-bar{position:absolute;left:24px;right:24px;height:44px;border-radius:12px;
+  background:rgba(201,105,74,.22);top:36px;}
+#s2 .numstamp{position:absolute;left:0;right:0;top:660px;text-align:center;opacity:0;}
+#s2 .numstamp .big{display:inline-block;font:900 88px "Songti TC";color:#151310;background:#FFFDF8;
+  padding:18px 46px 24px;border-radius:24px;box-shadow:0 20px 48px rgba(20,15,8,.3);transform:rotate(-2deg);}
+#s2 .numstamp .big i{font-style:normal;color:#C9694A;}
+#s2 .numstamp .sub{display:block;margin:20px auto 0;width:fit-content;font:900 32px "Noto Sans TC";color:#fff;
+  background:#C9694A;padding:12px 26px 15px;border-radius:14px;}
+#s2 .chips{position:absolute;left:0;right:0;top:700px;display:flex;gap:36px;justify-content:center;opacity:0;}
+#s2 .chip{width:300px;padding:30px 20px 24px;border-radius:22px;background:#FFFDF8;
+  box-shadow:0 20px 44px rgba(60,45,20,.18);text-align:center;font:900 40px Montserrat;color:#151310;}
+#s2 .chip small{display:block;font:800 24px Montserrat;color:rgba(21,19,16,.45);margin-top:6px;}
+#s2 .selbox{position:absolute;width:316px;height:132px;border:5px solid #C9694A;border-radius:26px;
+  top:692px;opacity:0;}
+#s2 .card{position:absolute;left:20px;top:1330px;width:1040px;height:590px;border-radius:56px;
+  background:#E9E3D5;box-shadow:0 30px 80px rgba(40,32,16,.28);}
+#s2 .capzh{position:absolute;left:0;right:0;top:985px;text-align:center;
+  font:500 44px "Noto Sans TC";color:#1c1710;}
+#s2 .capzh .hl{color:#C9694A;font-weight:900;}
+#s2 .capen{position:absolute;left:0;right:0;top:1053px;text-align:center;
+  font:600 28px Montserrat;color:rgba(28,23,16,.6);}
+/* ================= S3 暗夜霓虹 ================= */
+#s3{background:radial-gradient(1100px 800px at 50% 30%, #171b26, #0a0c11 70%);}
+#s3 .bokeh{position:absolute;border-radius:50%;filter:blur(26px);}
+#s3 .hud{position:absolute;left:60px;right:60px;top:200px;}
+#s3 .trk{display:flex;align-items:center;gap:18px;margin-bottom:26px;}
+#s3 .trk .lb{width:190px;text-align:center;font:800 26px Montserrat;color:#fff;
+  background:#3a3f4a;padding:9px 0 11px;border-radius:8px;}
+#s3 .trk .ln{flex:1;height:2px;background:rgba(255,255,255,.28);position:relative;}
+#s3 .trk .wave{position:absolute;left:0;top:-14px;}
+#s3 .trk .emo{position:absolute;left:0;top:-19px;font-size:26px;letter-spacing:14px;}
+#s3 .phead{position:absolute;top:-56px;bottom:-10px;width:5px;background:#2F7DF6;border-radius:3px;
+  box-shadow:0 0 18px #2F7DF6;left:250px;}
+#s3 .views{position:absolute;top:-104px;left:250px;transform:translateX(-50%);
+  font:800 40px Montserrat;color:#fff;white-space:nowrap;}
+#s3 .desk{position:absolute;left:0;right:0;top:1560px;height:360px;
+  background:linear-gradient(180deg,#12141a,#0a0c10);}
+#s3 .capzh{position:absolute;left:0;right:0;top:865px;text-align:center;
+  font:900 78px "Noto Sans TC";color:#fff;
+  text-shadow:0 0 26px rgba(255,255,255,.35),0 6px 24px rgba(0,0,0,.9);}
+#s3 .dim{position:absolute;inset:0;background:rgba(4,6,10,.6);opacity:0;}
+#s3 .dm{position:absolute;left:90px;right:90px;top:330px;opacity:0;}
+#s3 .dm .hd{display:flex;align-items:center;gap:18px;margin-bottom:44px;opacity:.75;}
+#s3 .dm .av{width:64px;height:64px;border-radius:50%;background:#3a3f4a;}
+#s3 .dm .who{font:800 30px Montserrat;color:rgba(255,255,255,.85);}
+#s3 .dm .who small{display:block;font:600 22px Montserrat;color:rgba(255,255,255,.4);}
+#s3 .bub{max-width:660px;margin-left:auto;background:#2F7DF6;color:#fff;border-radius:26px 26px 6px 26px;
+  padding:22px 28px 26px;font:500 34px "Noto Sans TC";line-height:1.45;min-height:86px;
+  box-shadow:0 14px 40px rgba(47,125,246,.35);}
+#s3 .bub .yl{background:#F6C445;color:#151310;font-weight:900;border-radius:6px;padding:0 6px;}
+#s3 .bub2{max-width:420px;margin:26px 0 0;background:#262a33;color:rgba(255,255,255,.9);
+  border-radius:26px 26px 26px 6px;padding:20px 26px 24px;font:500 32px "Noto Sans TC";opacity:0;}
+#s3 .neon{position:absolute;left:0;right:0;top:875px;text-align:center;opacity:0;
+  font:900 84px "Noto Sans TC";
+  background:linear-gradient(92deg,#FF5EDB,#8A7BFF 55%,#4DC9FF);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 22px rgba(150,110,255,.55));}
+.badge{position:absolute;top:80px;left:0;right:0;text-align:center;font:800 26px Montserrat;
+  letter-spacing:.3em;color:rgba(255,255,255,.4);}
+#s2 .badge{color:rgba(21,19,16,.4);}
+</style>
+</head>
+<body>
+<div data-hf-id="hf-coex" id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+
+  <!-- ============ S1 編輯黑紅 ============ -->
+  <div data-hf-id="hf-yihu" class="scene" id="s1">
+    <div data-hf-id="hf-mkjl" class="badge">STYLE 1 ・ 編輯黑紅 EDITORIAL RED</div>
+    <div data-hf-id="hf-gcwp" class="kicker" id="s1-kick">THE MODERN PLAYBOOK</div>
+    <div data-hf-id="hf-vong" class="head" id="s1-head">現代<span data-hf-id="hf-jdbn" class="rd">內容堆疊</span></div>
+    <svg data-hf-id="hf-hja2" class="tri" width="780" height="600" viewBox="0 0 780 600">
+      <path data-hf-id="hf-nuw5" id="s1-dot" d="M120,70 H660" stroke="#fff" stroke-width="5" stroke-dasharray="4 22" stroke-linecap="round" fill="none" opacity="0" />
+      <path data-hf-id="hf-nyi0" id="s1-tri" d="M120,70 L660,70 L390,520 Z" stroke="#E5484D" stroke-width="7" fill="none" stroke-linejoin="round" />
+      <g data-hf-id="hf-4u6h" id="s1-ic1" opacity="0"><circle data-hf-id="hf-l4fn" cx="120" cy="70" r="54" fill="#1c1e23" stroke="#fff" stroke-width="4" /><text data-hf-id="hf-pbyb" x="120" y="88" text-anchor="middle" font-size="50">📱</text></g>
+      <g data-hf-id="hf-5zcm" id="s1-ic2" opacity="0"><circle data-hf-id="hf-0qxe" cx="660" cy="70" r="54" fill="#1c1e23" stroke="#fff" stroke-width="4" /><text data-hf-id="hf-0suf" x="660" y="88" text-anchor="middle" font-size="50">▶️</text></g>
+      <g data-hf-id="hf-02ib" id="s1-ic3" opacity="0"><circle data-hf-id="hf-0una" cx="390" cy="520" r="58" fill="#E5484D" stroke="#fff" stroke-width="5" /><text data-hf-id="hf-ko7d" x="390" y="540" text-anchor="middle" font-size="54">✉️</text></g>
+      <path data-hf-id="hf-xnnf" id="s1-f1" d="M150,120 C220,300 300,420 355,478" stroke="#fff" stroke-width="4.5" stroke-dasharray="3 16" fill="none" opacity="0" />
+      <path data-hf-id="hf-p023" id="s1-f2" d="M630,120 C560,300 480,420 425,478" stroke="#fff" stroke-width="4.5" stroke-dasharray="3 16" fill="none" opacity="0" />
+    </svg>
+    <div data-hf-id="hf-plud" class="pill" id="s1-p1" style="left:96px;top:610px;">Instagram</div>
+    <div data-hf-id="hf-dv3x" class="pill" id="s1-p2" style="left:96px;top:684px;">TikTok</div>
+    <div data-hf-id="hf-32a6" class="pill" id="s1-p3" style="left:96px;top:758px;">Facebook</div>
+    <div data-hf-id="hf-c0lk" class="pill" id="s1-p4" style="left:96px;top:832px;">LinkedIn</div>
+    <div data-hf-id="hf-pqit" class="cal" id="s1-cal"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><i data-hf-id="hf-ylp6"></i><i data-hf-id="hf-0l8b"></i><i data-hf-id="hf-0zjc"></i><i data-hf-id="hf-zsm9"></i></div>
+    <div data-hf-id="hf-s096" class="speed" id="s1-speed">20 <b data-hf-id="hf-unp6">→ 50</b> MPH<small data-hf-id="hf-hdwu">長影音時速 20 拍・短影音時速 50 滑</small></div>
+    <div data-hf-id="hf-ch8r" class="card" id="s1-card"></div>
+    <div data-hf-id="hf-obci" class="capzh" id="s1-capzh">現代內容堆疊</div>
+    <div data-hf-id="hf-tzha" class="capen" id="s1-capen">THE MODERN CONTENT STACK</div>
+  </div>
+
+  <!-- ============ S2 紙感襯線 ============ -->
+  <div data-hf-id="hf-ukdt" class="scene" id="s2">
+    <div data-hf-id="hf-7cpd" class="badge">STYLE 2 ・ 紙感襯線 PAPER SERIF</div>
+    <div data-hf-id="hf-97jr" class="nowpill" id="s2-now"><span data-hf-id="hf-93aw">NOW SHOWING</span></div>
+    <div data-hf-id="hf-bki0" class="head" id="s2-head">Fable <i data-hf-id="hf-apbf">5</i></div>
+    <svg data-hf-id="hf-3utk" id="s2-critter" style="position:absolute;left:806px;top:262px;" width="150" height="126" viewBox="0 0 132 108" />
+    <div data-hf-id="hf-g9r2" class="doc" id="s2-doc">
+      <div data-hf-id="hf-qlu9" class="hl-bar" id="s2-hlbar"></div>
+      <div data-hf-id="hf-j4kf" class="ln" style="width:82%"></div><div data-hf-id="hf-9xms" class="ln" style="width:94%"></div>
+      <div data-hf-id="hf-w07i" class="ln" style="width:70%"></div><div data-hf-id="hf-y5ep" class="ln" style="width:88%"></div>
+      <div data-hf-id="hf-rzpj" class="ln" style="width:60%"></div><div data-hf-id="hf-alje" class="ln" style="width:92%"></div>
+      <div data-hf-id="hf-279s" class="ln" style="width:76%"></div><div data-hf-id="hf-6kph" class="ln" style="width:84%"></div>
+    </div>
+    <div data-hf-id="hf-s6vj" class="numstamp" id="s2-num"><span data-hf-id="hf-9ew7" class="big"><i data-hf-id="hf-2ccx">120,000</i> 字元</span><span data-hf-id="hf-yh6x" class="sub">超過 1,500 行指令</span></div>
+    <div data-hf-id="hf-2476" class="chips" id="s2-chips">
+      <div data-hf-id="hf-oghn" class="chip">GLM 5.2<small data-hf-id="hf-9mnt">OPEN SOURCE</small></div>
+      <div data-hf-id="hf-ah6y" class="chip">Kimi K2.7<small data-hf-id="hf-fah9">OPEN SOURCE</small></div>
+    </div>
+    <div data-hf-id="hf-z0xa" class="selbox" id="s2-sel" style="left:214px;"></div>
+    <div data-hf-id="hf-vn2y" class="card"></div>
+    <div data-hf-id="hf-4f38" class="dummy" id="s2-dummy" style="left:340px;top:1080px;"></div>
+    <div data-hf-id="hf-n3sq" class="capzh" id="s2-capzh">整整 <span data-hf-id="hf-5o2c" class="hl">12 萬字元</span>、超過 1,500 行</div>
+    <div data-hf-id="hf-2p1z" class="capen" id="s2-capen">120,000 characters, 1,500+ lines</div>
+  </div>
+
+  <!-- ============ S3 暗夜霓虹 ============ -->
+  <div data-hf-id="hf-tsq0" class="scene" id="s3">
+    <div data-hf-id="hf-9nes" class="bokeh" style="left:80px;top:600px;width:130px;height:130px;background:rgba(255,170,90,.16);"></div>
+    <div data-hf-id="hf-9l8s" class="bokeh" style="left:860px;top:520px;width:110px;height:110px;background:rgba(120,160,255,.14);"></div>
+    <div data-hf-id="hf-d5kn" class="bokeh" style="left:760px;top:900px;width:90px;height:90px;background:rgba(255,120,180,.12);"></div>
+    <div data-hf-id="hf-ptk5" class="badge">STYLE 3 ・ 暗夜霓虹 MIDNIGHT NEON</div>
+    <div data-hf-id="hf-3tbf" class="desk"></div>
+    <div data-hf-id="hf-9o99" class="dummy" id="s3-dummy" style="left:320px;top:980px;"></div>
+    <div data-hf-id="hf-kf4r" class="hud" id="s3-hud">
+      <div data-hf-id="hf-l3rt" class="trk"><div data-hf-id="hf-2c8c" class="lb" id="s3-lb0">FLAT</div><div data-hf-id="hf-gmyq" class="ln"></div></div>
+      <div data-hf-id="hf-wqi5" class="trk"><div data-hf-id="hf-t93a" class="lb" id="s3-lb1">PACING</div><div data-hf-id="hf-ru7a" class="ln"><svg data-hf-id="hf-fyjt" class="wave" width="640" height="28"><path data-hf-id="hf-axoc" d="M0,14 q20,-12 40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0" stroke="#E5484D" stroke-width="3" fill="none" /></svg></div></div>
+      <div data-hf-id="hf-xxf8" class="trk"><div data-hf-id="hf-gnoh" class="lb" id="s3-lb2">TONALITY</div><div data-hf-id="hf-s8ib" class="ln"><svg data-hf-id="hf-a4rh" class="wave" width="640" height="28"><path data-hf-id="hf-7ylv" d="M0,20 q40,-22 80,-6 t80,4 t80,-10 t80,8 t80,-6 t80,4 t80,-8" stroke="#3ECF8E" stroke-width="3" fill="none" /></svg></div></div>
+      <div data-hf-id="hf-xj47" class="trk"><div data-hf-id="hf-z3xy" class="lb" id="s3-lb3">HANDS</div><div data-hf-id="hf-smtc" class="ln"><div data-hf-id="hf-pwmn" class="emo">👋 ✌️ 👐 ☝️ 🤲</div></div></div>
+      <div data-hf-id="hf-yq1a" class="trk"><div data-hf-id="hf-swyk" class="lb" id="s3-lb4">EMOTION</div><div data-hf-id="hf-puo5" class="ln"><div data-hf-id="hf-erzp" class="emo">😐 🙂 😃 🤩 😲</div></div></div>
+      <div data-hf-id="hf-zwn3" class="phead" id="s3-ph"><div data-hf-id="hf-kqu2" class="views" id="s3-views">👁 100</div></div>
+    </div>
+    <div data-hf-id="hf-gwnh" class="capzh" id="s3-capzh">不學會對鏡頭說話</div>
+    <div data-hf-id="hf-svn3" class="dim" id="s3-dim"></div>
+    <div data-hf-id="hf-wl17" class="dm" id="s3-dm">
+      <div data-hf-id="hf-0hws" class="hd"><div data-hf-id="hf-pvrx" class="av"></div><div data-hf-id="hf-4oy4" class="who">New Follower<small data-hf-id="hf-6uiu">devinfollower</small></div></div>
+      <div data-hf-id="hf-0lio" class="bub" id="s3-bub1"></div>
+      <div data-hf-id="hf-pkry" class="bub2" id="s3-bub2">好啊，是什麼？</div>
+    </div>
+    <div data-hf-id="hf-7vp6" class="neon" id="s3-neon">新粉絲 → 新客戶</div>
+  </div>
+
+</div>
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+/* ---------- 假人偶（頭＋肩膀半身，會晃、會講話） ---------- */
+function dummySVG(id, w, fill, rim){
+  const s = w/300;
+  return `<svg id="${id}" width="${w}" height="${Math.round(w*1.1)}" viewBox="0 0 300 330">
+    <g id="${id}-bob">
+      <path d="M40,330 C40,240 100,205 150,205 C200,205 260,240 260,330 Z" fill="${fill}" ${rim?`stroke="${rim}" stroke-width="5"`:""}/>
+      <rect x="128" y="158" width="44" height="52" rx="18" fill="${fill}"/>
+      <g id="${id}-hd"><circle cx="150" cy="105" r="72" fill="${fill}" ${rim?`stroke="${rim}" stroke-width="5"`:""}/>
+        <circle cx="126" cy="95" r="9" fill="rgba(255,255,255,.85)"/>
+        <circle cx="174" cy="95" r="9" fill="rgba(255,255,255,.85)"/>
+        <rect id="${id}-mouth" class="mouth" x="132" y="130" width="36" height="14" rx="7" fill="rgba(255,255,255,.85)"/>
+      </g>
+    </g>
+  </svg>`;
+}
+/* 放到場景：S1 卡片內、S2 頭頂凸出卡片、S3 桌前剪影 */
+document.querySelector("#s1-card").innerHTML =
+  '<div style="position:absolute;left:250px;top:70px;">'+dummySVG("d1",460,"#4a4f5a","")+"</div>";
+document.querySelector("#s2-dummy").innerHTML = dummySVG("d2",400,"#8d8577","");
+document.querySelector("#s3-dummy").innerHTML = dummySVG("d3",440,"#1d222c","#C57A5A");
+/* 像素小獸（S2） */
+(function(){
+  const M=["..BBBBBBB..","..BKKBKKB..","..BKKBKKB..","..BBBBBBB..",".BBBBBBBBB.",".BBBBBBBBB.","..BBBBBBB..","..B.B.B.B..","..B.B.B.B.."];
+  const U=12; let out="";
+  for(let r=0;r<M.length;r++){const row=M[r].replace(/K/g,"B");let c=0;
+    while(c<row.length){ if(row[c]==="B"){let c2=c;while(c2<row.length&&row[c2]==="B")c2++;
+      out+=`<rect x="${c*U}" y="${r*U}" width="${(c2-c)*U+.6}" height="${U+.6}" fill="#C57A5A"/>`;c=c2;} else c++; } }
+  [[3,1],[6,1]].forEach(([c,r])=>{out+=`<rect x="${c*U+3}" y="${r*U+3}" width="${2*U-6}" height="${2*U-6}" rx="2" fill="#141414"/>`;});
+  document.querySelector("#s2-critter").innerHTML=`<g id="s2-cbody">${out}</g>`;
+})();
+/* 通用：講話嘴型＋輕微搖晃 */
+function talk(id, from, to){
+  const n=Math.floor((to-from)/0.24);
+  tl.fromTo("#"+id+"-mouth",{scaleY:.4},{scaleY:1.6,repeat:n,yoyo:true,duration:.12,ease:"none"},from);
+  tl.fromTo("#"+id+"-bob",{y:3,rotation:-1},{y:-3,rotation:1,repeat:Math.floor((to-from)/0.8),yoyo:true,duration:.8,ease:"sine.inOut"},from);
+}
+function typeIn(sel, text, at, dur, finalHTML){
+  const el=document.querySelector(sel); const o={n:0};
+  tl.to(o,{n:text.length,duration:dur,ease:"none",onUpdate:function(){
+    if(!el)return; const n=Math.round(o.n);
+    if(finalHTML&&n>=text.length)el.innerHTML=finalHTML; else el.textContent=text.slice(0,n);}},at);
+}
+function scene(id, at, out){
+  tl.set(id,{visibility:"visible"},at); tl.set(id,{opacity:1},at);
+  tl.set(id,{opacity:0,visibility:"hidden"},out);
+}
+function cap(zhSel, enSel, items){ /* items: [t, zhHTML, enText] — 場景內建雙語字幕輪播 */
+  items.forEach(function(it,i){
+    const t=it[0], nextT=items[i+1]?items[i+1][0]:it[3];
+    tl.set(zhSel,{innerHTML:it[1]},t); if(enSel)tl.set(enSel,{textContent:it[2]},t);
+    tl.fromTo(zhSel,{opacity:0,y:10},{opacity:1,y:0,duration:.14,ease:"power2.out"},t);
+    if(enSel)tl.fromTo(enSel,{opacity:0,y:8},{opacity:1,y:0,duration:.14,ease:"power2.out"},t+.03);
+    tl.to(zhSel,{opacity:0,duration:.1},nextT-.1);
+    if(enSel)tl.to(enSel,{opacity:0,duration:.1},nextT-.1);
+  });
+}
+
+/* ================= S1（0–10s） ================= */
+scene("#s1",0,10);
+talk("d1",0.3,9.7);
+tl.fromTo("#s1-kick",{opacity:0,y:-16},{opacity:1,y:0,duration:.4,ease:"power2.out"},0.15);
+tl.fromTo("#s1-head",{opacity:0,scale:.86,y:18},{opacity:1,scale:1,y:0,duration:.5,ease:"back.out(1.6)"},0.3);
+tl.fromTo("#s1-tri",{strokeDashoffset:1560,strokeDasharray:1560},{strokeDashoffset:0,duration:1.1,ease:"power2.inOut"},1.0);
+tl.fromTo("#s1-dot",{opacity:0},{opacity:1,duration:.3},2.0);
+[["#s1-ic1",2.2],["#s1-ic2",2.4],["#s1-ic3",2.6]].forEach(p=>{
+  tl.fromTo(p[0],{opacity:0,scale:.2,svgOrigin:p[0]==="#s1-ic3"?"390 520":(p[0]==="#s1-ic1"?"120 70":"660 70")},
+    {opacity:1,scale:1,duration:.4,ease:"back.out(2.4)"},p[1]);});
+[["#s1-p1",3.2],["#s1-p2",3.4],["#s1-p3",3.6],["#s1-p4",3.8]].forEach(p=>{
+  tl.fromTo(p[0],{opacity:0,x:-40,scale:.6},{opacity:1,x:0,scale:1,duration:.35,ease:"back.out(2)"},p[1]);});
+tl.fromTo("#s1-cal",{opacity:0,y:14},{opacity:1,y:0,duration:.3},4.8);
+document.querySelectorAll("#s1-cal i").forEach(function(el,i){
+  tl.to(el,{backgroundColor:"#E5484D",borderColor:"#E5484D",duration:.12},5.0+i*.14);});
+tl.fromTo("#s1-f1",{opacity:0},{opacity:1,duration:.2},6.3);
+tl.fromTo("#s1-f2",{opacity:0},{opacity:1,duration:.2},6.5);
+tl.fromTo("#s1-ic3",{scale:1,svgOrigin:"390 520"},{scale:1.25,duration:.25,yoyo:true,repeat:1,ease:"power2.inOut"},6.9);
+/* 8s：whip 換到速度卡 */
+tl.to("#s1 .tri, #s1-p1, #s1-p2, #s1-p3, #s1-p4, #s1-cal, #s1-head, #s1-kick",{x:-1150,duration:.32,ease:"power4.in",stagger:.012},7.7);
+tl.fromTo("#s1-speed",{opacity:0,x:900,skewX:-14},{opacity:1,x:0,skewX:0,duration:.42,ease:"power3.out"},8.05);
+cap("#s1-capzh","#s1-capen",[
+  [0.4,"現代<b style='color:#E5484D'>內容堆疊</b>","THE MODERN CONTENT STACK",10],
+  [2.1,"一個倒三角形","AN UPSIDE-DOWN TRIANGLE"],
+  [3.2,"選一個主平台","PICK ONE ANCHOR PLATFORM"],
+  [4.8,"一週發七支","POST 7X PER WEEK"],
+  [6.3,"全部導進 EMAIL","EVERYTHING FUNNELS TO EMAIL"],
+  [8.1,"時速 20 拍・時速 50 滑","FILMED AT 20 — CONSUMED AT 50",9.9]
+]);
+
+/* ================= S2（10–20s） ================= */
+scene("#s2",10,20);
+talk("d2",10.3,19.7);
+tl.fromTo("#s2-now",{opacity:0,y:-14},{opacity:1,y:0,duration:.35,ease:"power2.out"},10.2);
+tl.fromTo("#s2-head",{opacity:0,scale:.88},{opacity:1,scale:1,duration:.5,ease:"back.out(1.5)"},10.35);
+tl.fromTo("#s2-cbody",{opacity:0,scale:.3,svgOrigin:"66 54"},{opacity:1,scale:1,duration:.45,ease:"back.out(2)"},10.7);
+tl.fromTo("#s2-cbody",{y:4},{y:-6,repeat:9,yoyo:true,duration:.45,ease:"sine.inOut"},11.2);
+tl.fromTo("#s2-doc",{opacity:0,y:40,scale:.96},{opacity:1,y:0,scale:1,duration:.5,ease:"power3.out"},11.2);
+tl.to("#s2-hlbar",{y:330,duration:2.2,ease:"none"},11.7);
+tl.to("#s2-doc",{opacity:0,y:-26,duration:.3},13.9);
+tl.fromTo("#s2-num",{opacity:0,scale:.4,rotation:-6},{opacity:1,scale:1,rotation:0,duration:.45,ease:"back.out(1.7)"},14.3);
+tl.to("#s2-num",{y:-7,repeat:3,yoyo:true,duration:.45,ease:"sine.inOut"},14.85);
+tl.to("#s2-num",{opacity:0,scale:.85,duration:.28},16.4);
+tl.fromTo("#s2-chips",{opacity:0,y:40},{opacity:1,y:0,duration:.45,ease:"power3.out"},16.8);
+tl.fromTo("#s2-sel",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.3,ease:"back.out(2)"},17.3);
+tl.to("#s2-sel",{x:336,duration:.45,ease:"power2.inOut"},18.2);
+cap("#s2-capzh","#s2-capen",[
+  [10.4,"Fable 5 系統提示詞<span class='hl'>外流了</span>","the Fable 5 system prompt just leaked",20],
+  [12.2,"這不是陽春 prompt","this is not some basic prompt"],
+  [14.3,"整整 <span class='hl'>12 萬字元</span>","a full 120,000 characters"],
+  [16.8,"注入<span class='hl'>開源模型</span>","inject it into open-source models"],
+  [18.4,"<span class='hl'>兩全其美</span>","the best of both worlds",19.9]
+]);
+
+/* ================= S3（20–30s） ================= */
+scene("#s3",20,30);
+talk("d3",20.3,29.7);
+/* HUD：播放頭橫掃＋觀看數跳＋軌道逐一亮 */
+tl.fromTo("#s3-hud",{opacity:0,y:-30},{opacity:1,y:0,duration:.45,ease:"power2.out"},20.2);
+tl.fromTo("#s3-ph",{x:0},{x:640,duration:4.6,ease:"none"},20.6);
+(function(){
+  const el=document.querySelector("#s3-views"), steps=["👁 100","👁 5K","👁 10K","👁 100K","👁 1M"], o={v:0};
+  tl.to(o,{v:4,duration:4.6,ease:"none",onUpdate:function(){if(el)el.textContent=steps[Math.round(o.v)];}},20.6);
+})();
+["#s3-lb0","#s3-lb1","#s3-lb2","#s3-lb3","#s3-lb4"].forEach(function(s,i){
+  tl.to(s,{backgroundColor:"#2F7DF6",duration:.2},20.6+i*.92);
+  if(i>0)tl.to("#s3-lb"+(i-1),{backgroundColor:"#3a3f4a",duration:.2},20.6+i*.92);
+});
+tl.fromTo("#s3-lb4",{scale:1},{scale:1.12,duration:.2,yoyo:true,repeat:3},24.4);
+cap("#s3-capzh",null,[
+  [20.5,"不學會對鏡頭說話","",30],
+  [22.4,"你的影片永遠不會爆",""],
+  [24.4,"同一句話・一萬倍觀看","",25.3]
+]);
+/* 25s：壓暗 → DM 重演 */
+tl.to("#s3-dim",{opacity:1,duration:.4},25.2);
+tl.to("#s3-hud",{opacity:.12,duration:.4},25.2);
+tl.to("#s3-capzh",{opacity:0,duration:.2},25.2);
+tl.fromTo("#s3-dm",{opacity:0,y:30},{opacity:1,y:0,duration:.4,ease:"power2.out"},25.5);
+typeIn("#s3-bub1","嘿，謝謝你的追蹤！我正在想下一支免費影片要做什麼，很想聽聽你的意見 🙌",25.9,2.2,
+  "嘿，謝謝你的追蹤！我正在想下一支<span class='yl'>免費影片</span>要做什麼，很想聽聽你的意見 🙌");
+tl.fromTo("#s3-bub2",{opacity:0,y:16,scale:.9},{opacity:1,y:0,scale:1,duration:.35,ease:"back.out(1.8)"},28.5);
+tl.fromTo("#s3-neon",{opacity:0,scale:.8},{opacity:1,scale:1,duration:.45,ease:"back.out(1.8)"},28.9);
+tl.set({},{},30);
+window.__timelines["main"] = tl;
+</script>
+</body>
+</html>

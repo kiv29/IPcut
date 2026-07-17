@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+  overlay.html — 「為你剪片」疊加層舞台（字幕 + 動態圖卡）
+  Copyright (c) 2026 Fyn Chang. All rights reserved.
+
+  由 engine/render-overlay.mjs 以無頭 Chrome 開啟：
+    overlay.html?script=<script.json 的 URL>
+  逐格呼叫 window.__seek(t) 後截圖（透明背景），合成到底片上。
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="design-tokens.css">
+  <script src="lib/timeline.js"></script>
+  <script src="lib/mg-library.js"></script>
+  <script src="lib/mg-extra.js"></script>
+  <script src="lib/captions.js"></script>
+</head>
+<body>
+  <div id="wn-stage"></div>
+  <script>
+    (async function () {
+      const params = new URLSearchParams(location.search);
+      const scriptUrl = params.get("script") || "script.json";
+      const res = await fetch(scriptUrl);
+      const script = await res.json();
+
+      // 版面：依 script 寬高適配（橫式 16:9 支援）
+      const W = script.width || 1080, H = script.height || 1920;
+      const LAND = W > H;
+      document.documentElement.style.width = W + "px";
+      document.documentElement.style.height = H + "px";
+      document.body.style.width = W + "px";
+      document.body.style.height = H + "px";
+      window.WNLAYOUT = { W, H, landscape: LAND, centerX: W / 2,
+        capBottom: LAND ? 96 : 630, cardTop: LAND ? 640 : 1330 };
+      if (LAND) {
+        document.documentElement.style.setProperty("--wn-cap-bottom", "96px");
+        document.documentElement.style.setProperty("--wn-cap-maxw", "1400px");
+      }
+
+      const stage = document.getElementById("wn-stage");
+      const tl = new WNTimeline();
+
+      WNCaptions.build(stage, script.lines || [], tl);
+      WNMG.build(stage, script.mg || [], tl);
+      tl.pad(script.duration || 0);
+
+      await document.fonts.ready;
+
+      window.__seek = function (t) { tl.seek(t); return true; };
+      window.__duration = tl.duration();
+      window.__ready = true;
+    })().catch((e) => {
+      window.__error = String(e && e.stack || e);
+      window.__ready = true;
+    });
+  </script>
+</body>
+</html>

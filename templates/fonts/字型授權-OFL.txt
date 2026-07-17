@@ -1,0 +1,20 @@
+字型授權說明 / Font License
+==============================
+
+本資料夾內的字型：
+- Noto Sans TC（思源黑體）
+- Noto Serif TC（思源宋體）
+
+授權：SIL Open Font License, Version 1.1 (OFL-1.1)
+版權：© Google / Adobe（Noto / Source Han 專案）
+
+你可以：內附、商用、與你的產品一起散佈。
+你不可以：單獨販售字型本身；移除授權聲明。
+
+散佈本產品時，請一併附上 OFL 授權「全文」。
+官方全文可從以下任一處取得後放在這個資料夾：
+- https://openfontlicense.org/open-font-license-official-text/
+- https://github.com/notofonts/noto-cjk （各字型附帶的 LICENSE）
+- https://fonts.google.com/noto （下載字型時附帶）
+
+（把上面下載到的 OFL 授權全文存成 OFL.txt 放在這裡即可。）
